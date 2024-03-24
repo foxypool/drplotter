@@ -1,0 +1,48 @@
+version: '3'
+services:
+  plotter:
+    image: ghcr.io/foxypool/drplotter:latest-plotter
+    restart: unless-stopped
+    runtime: nvidia
+    volumes:
+      - /path/to/plots:/plots
+#    environment:
+#      ## GPU Specific Options
+#      NVIDIA_VISIBLE_DEVICES: 0,3
+    command: plot -f <your_farmer_key> -c <your_pool_contract_address> -d /plots/ --compression <eco3x or pro4x>
+  server:
+    image: ghcr.io/foxypool/drplotter:latest-server
+    restart: unless-stopped
+    ports:
+      - "8080:8080"
+  solver:
+    image: ghcr.io/foxypool/drplotter:latest-solver
+    restart: unless-stopped
+    runtime: nvidia
+#    environment:
+#      ## Remote drsolver
+#      DRPLOTTER_CLIENT_TOKEN: your_unique_48_character_token_here
+#      ## Local drserver
+#      DRSERVER_IP_ADDRESS: your_drserver_ip_address:port
+#      ## GPU Specific Options
+#      NVIDIA_VISIBLE_DEVICES: 0,3
+  harvester:
+    image: ghcr.io/foxypool/drplotter:latest-harvester
+    restart: unless-stopped
+    volumes:
+      - /path/to/.chia:/root/.chia/mainnet
+      - /path/to/plots:/plots
+#      - /path/to/ssl/ca:/path/in/container
+    environment:
+      CHIA_LOG_LEVEL: 'INFO'
+      CHIA_PLOTS: /plots
+      CHIA_FARMER_ADDRESS: your_farmer_ip_or_hostname_here
+      CHIA_FARMER_PORT: 8447
+#      CHIA_HOSTNAME: 127.0.0.1
+#      TZ: 'UTC'
+#      ## Only set CHIA_CA once on init, remove afterward
+#      CHIA_CA: /path/in/container
+#      ## Remote drsolver
+#      DRPLOTTER_CLIENT_TOKEN: your_unique_48_character_token_here
+#      ## Local drserver
+#      DRSERVER_IP_ADDRESS: your_drserver_ip_address:port
