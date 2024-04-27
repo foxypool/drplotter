@@ -15,7 +15,7 @@ FROM mikefarah/yq:4 AS yq
 FROM debian:12-slim AS base
 ARG DEBIAN_FRONTEND=noninteractive
 RUN apt-get update && apt-get install --no-install-recommends -y \
-	tzdata \
+	tzdata openssl \
 	&& rm -rf /var/lib/apt/lists/*
 WORKDIR /app
 
