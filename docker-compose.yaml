@@ -15,6 +15,8 @@ services:
     restart: unless-stopped
     ports:
       - "8080:8080"
+#    environment:
+#      DRPLOTTER_CLIENT_TOKEN: your_unique_48_character_token_here
   solver:
     image: ghcr.io/foxypool/drplotter:latest-solver
     restart: unless-stopped
