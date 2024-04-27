@@ -19,6 +19,7 @@ services:
     image: ghcr.io/foxypool/drplotter:latest-solver
     restart: unless-stopped
     runtime: nvidia
+    tty: true
 #    environment:
 #      ## Remote drsolver
 #      DRPLOTTER_CLIENT_TOKEN: your_unique_48_character_token_here
