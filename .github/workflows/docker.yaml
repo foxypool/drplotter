@@ -7,6 +7,11 @@ on:
         description: "Release tag of upstream drplotter repo"
         required: true
         type: string
+      tag-as-latest:
+        description: "Tag the built images as latest"
+        required: true
+        type: boolean
+        default: true
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}-${{ github.event_name }}
@@ -39,7 +44,7 @@ jobs:
         with:
           images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
           flavor: |
-            latest=true
+            latest=${{ inputs.tag-as-latest }}
             suffix=-${{ matrix.final-build-stage }},onlatest=true
           tags: |
             type=raw,value=${{ inputs.tag }}
