@@ -33,7 +33,7 @@ services:
     image: ghcr.io/foxypool/drplotter:latest-harvester
     restart: unless-stopped
     volumes:
-      - /path/to/.chia:/root/.chia/mainnet
+      - /path/to/.chia:/root/.chia
       - /path/to/plots:/plots
 #      - /path/to/ssl/ca:/path/in/container
     environment:
