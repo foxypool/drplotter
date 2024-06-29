@@ -31,6 +31,9 @@ ENV NVIDIA_DRIVER_CAPABILITIES compute,utility
 
 
 FROM compute-base AS plotter
+RUN apt-get update && apt-get install --no-install-recommends -y \
+	numactl \
+	&& rm -rf /var/lib/apt/lists/*
 COPY --from=builder /drplotter/drplotter .
 ENTRYPOINT ["./drplotter"]
 
